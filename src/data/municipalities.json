@@ -1,0 +1,9 @@
+{
+  "data": [
+    { "id": 301, "name": "Oslo" },
+    { "id": 1103, "name": "Stavanger" },
+    { "id": 4601, "name": "Bergen" },
+    { "id": 5001, "name": "Trondheim" },
+    { "id": 5401, "name": "Tromsø" }
+  ]
+}

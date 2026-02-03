@@ -2,8 +2,18 @@ import Card from "./components/card/Card";
 import Footer from "./components/footer/Footer";
 import UserProfile from "./components/user-profile/UserProfile";
 import EventCard from "./components/event-card/EventCard";
+import Counter from "./components/counter/Counter";
+import UserSettings from "./components/user-settings/UserSettings";
+import ToggleMessage from "./components/toggle-message/ToggleMessage";
+import NameInput from "./components/name-input/NameInput";
+import LoadingIndicator from "./components/loading-indicator/LoadingIndicator";
+import MunicipalityList from "./components/municipalities/Municipalities";
 
 function App() {
+  const alertMe = () => {
+    alert("Foo");
+  };
+
   return (
     <>
       <header>
@@ -12,6 +22,19 @@ function App() {
       </header>
 
       <main>
+        <section>
+          <MunicipalityList />
+          <hr />
+          <Counter />
+          <hr />
+          <UserSettings />
+          <hr />
+          <ToggleMessage handleOnClick={alertMe}>FOO BAR</ToggleMessage>
+          <hr />
+          <NameInput />
+          <hr />
+          <LoadingIndicator />
+        </section>
         <section title="event-section">
           <EventCard
             title="17. mai-feiring"

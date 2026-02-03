@@ -10,10 +10,7 @@ interface IProps {
 export default function UserProfile({ name, city, age, isActive }: IProps) {
   // Accessing the props using dot notation
   return (
-    <div
-      className={isActive ? styles.bgGreen : styles.bgRed}
-      style={{ border: "1px solid grey", margin: "10px", padding: "10px" }}
-    >
+    <div style={{ border: "1px solid grey", margin: "10px", padding: "10px" }}>
       <h2>Navn: {name}</h2>
       <p>By: {city}</p>
       <p>Alder: {age}</p>

@@ -13,6 +13,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Apply a natural box layout model to all elements */
+html {
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -22,14 +32,32 @@ a {
     color: #535bf2;
   }
 }
-
-body {
+html,
+body,
+header,
+main,
+footer {
+  width: 100%;
   margin: 0;
+}
+
+header,
+main,
+footer {
+  padding: 0 4vw;
+}
+
+section {
+  padding: 2vh 1vw;
+}
+
+#root {
   display: flex;
   flex-direction: column;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  width: 100%;
 }
 
 header {
