@@ -8,32 +8,67 @@ import ToggleMessage from "./components/toggle-message/ToggleMessage";
 import NameInput from "./components/name-input/NameInput";
 import LoadingIndicator from "./components/loading-indicator/LoadingIndicator";
 import MunicipalityList from "./components/municipalities/Municipalities";
+import SafeCounter from "./components/safe-counter/SafeCounter";
+import InputLogger from "./components/input-logger/InputLogger";
+import UserGreeting from "./components/user-greeting/UserGreeting";
+import Timer from "./components/timer/Timer";
+import MouseTracker from "./components/mouse-tracker/MouseTracker";
+import { useEffect, useState } from "react";
+import UserContext from "./hooks/user/UserContext";
+import type { OptionalUser, User } from "./types";
+import Layout from "./components/layout/Layout";
 
 function App() {
+  const [user, setUser] = useState<OptionalUser>({});
+
   const alertMe = () => {
     alert("Foo");
   };
 
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(`https://dummyjson.com/users/${2}`);
+      const data: User = await res.json();
+
+      setUser(data);
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <header>
-        <h1>React Website</h1>
+        <h1>React Website: {user?.firstName}</h1>
         <p>We are learning how to use react</p>
       </header>
 
       <main>
         <section>
-          <MunicipalityList />
-          <hr />
-          <Counter />
-          <hr />
-          <UserSettings />
-          <hr />
-          <ToggleMessage handleOnClick={alertMe}>FOO BAR</ToggleMessage>
-          <hr />
-          <NameInput />
-          <hr />
-          <LoadingIndicator />
+          <UserContext.Provider value={user}>
+            <Layout />
+            <MouseTracker />
+            <hr />
+            <Timer />
+            <hr />
+            <UserGreeting />
+            <hr />
+            <InputLogger />
+            <hr />
+            <SafeCounter />
+            <hr />
+            <MunicipalityList />
+            <hr />
+            <Counter />
+            <hr />
+            <UserSettings />
+            <hr />
+            <ToggleMessage handleOnClick={alertMe}>FOO BAR</ToggleMessage>
+            <hr />
+            <NameInput />
+            <hr />
+            <LoadingIndicator />
+          </UserContext.Provider>
         </section>
         <section title="event-section">
           <EventCard

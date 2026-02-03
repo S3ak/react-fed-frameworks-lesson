@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserContext from "../../hooks/user/UserContext";
 
 export default function UserSettings() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  // ... logic to change theme and toggle notifications ...
+  const { firstName } = useContext(UserContext);
 
   return (
     <div>
       <p>Tema: {theme}</p>
+      <p>Hey User: {firstName}</p>
       <button
         onClick={() =>
           setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"))
