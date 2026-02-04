@@ -8,7 +8,6 @@ function MouseTracker() {
 
   useEffect(() => {
     function handleMouseMove(e: MouseEvent) {
-      console.log("Mouse moved", e);
       setMousePos({
         x: e.clientX,
         y: e.clientY,

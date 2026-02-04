@@ -7,7 +7,6 @@ function IntervalTimer() {
     console.log("Setting up interval...");
     // Setup: Start an interval timer
     const intervalId = setInterval(() => {
-      console.log("Interval tick");
       setSeconds((prevSeconds) => prevSeconds + 1);
     }, 1000); // Update every second
 

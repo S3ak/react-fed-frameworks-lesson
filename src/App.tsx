@@ -45,31 +45,34 @@ function App() {
 
       <main>
         <section>
-          <UserContext.Provider value={user}>
-            <Layout />
-            <MouseTracker />
-            <hr />
-            <Timer />
-            <hr />
-            <UserGreeting />
-            <hr />
-            <InputLogger />
-            <hr />
-            <SafeCounter />
-            <hr />
-            <MunicipalityList />
-            <hr />
-            <Counter />
-            <hr />
-            <UserSettings />
-            <hr />
-            <ToggleMessage handleOnClick={alertMe}>FOO BAR</ToggleMessage>
-            <hr />
-            <NameInput />
-            <hr />
-            <LoadingIndicator />
-          </UserContext.Provider>
+            <UserContext.Provider value={user}>
+              <Layout>
+              
+              <MouseTracker />
+              <hr />
+              <Timer />
+              <hr />
+              <UserGreeting />
+              <hr />
+              <InputLogger />
+              <hr />
+              <SafeCounter />
+              <hr />
+              <MunicipalityList />
+              <hr />
+              <Counter />
+              <hr />
+              <UserSettings />
+              <hr />
+              <ToggleMessage handleOnClick={alertMe}>FOO BAR</ToggleMessage>
+              <hr />
+              <NameInput />
+              <hr />
+              <LoadingIndicator />
+              </Layout>
+            </UserContext.Provider>
         </section>
+
         <section title="event-section">
           <EventCard
             title="17. mai-feiring"
