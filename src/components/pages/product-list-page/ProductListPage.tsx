@@ -16,6 +16,8 @@ export default function ProductListPage() {
     // The hook knows 'query' is string|undefined and 'page' is number
     const { query, page } = productsRoute.useSearch();
 
+    // Task: Implement a search feature using search params from tanstack
+
 
     // Filter products based on the validated query
     const filteredProducts = query
