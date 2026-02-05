@@ -1,0 +1,10 @@
+.productList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+
+  a {
+    flex: 1;
+    max-width: 320px;
+  }
+}
