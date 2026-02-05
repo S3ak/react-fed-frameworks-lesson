@@ -17,96 +17,89 @@ import { useEffect, useState } from "react";
 import UserContext from "../../../hooks/user/UserContext";
 import type { OptionalUser, User } from "../../../types";
 import Layout from "../../../components/layout/Layout";
+import { Link } from "@tanstack/react-router";
+import Nav from "../../ui/nav/Nav";
 
 function HomePage() {
-    const [user, setUser] = useState<OptionalUser>({});
+  const [user, setUser] = useState<OptionalUser>({});
 
-    const alertMe = () => {
-        alert("Foo");
-    };
+  const alertMe = () => {
+    alert("Foo");
+  };
 
-    useEffect(() => {
-        async function fetchData() {
-            const res = await fetch(`https://dummyjson.com/users/${2}`);
-            const data: User = await res.json();
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(`https://dummyjson.com/users/${2}`);
+      const data: User = await res.json();
 
-            setUser(data);
-        }
+      setUser(data);
+    }
 
-        fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
-    return (
-        <>
-            <header>
-                <h1>React Website: {user?.firstName}</h1>
-                <p>We are learning how to use react</p>
-            </header>
+  return (
+    <>
+      <main>
+        <section>
+          <UserContext.Provider value={user}>
+            <hr />
+            <MouseTracker />
+            <hr />
+            <Timer />
+            <hr />
+            <UserGreeting />
+            <hr />
+            <InputLogger />
+            <hr />
+            <SafeCounter />
+            <hr />
+            <MunicipalityList />
+            <hr />
+            <Counter />
+            <hr />
+            <UserSettings />
+            <hr />
+            <ToggleMessage handleOnClick={alertMe}>FOO BAR</ToggleMessage>
+            <hr />
+            <NameInput />
+            <hr />
+            <LoadingIndicator />
+          </UserContext.Provider>
+        </section>
 
-            <main>
-                <section>
-                    <UserContext.Provider value={user}>
-                        <Layout>
-                            <hr />
-                            <MouseTracker />
-                            <hr />
-                            <Timer />
-                            <hr />
-                            <UserGreeting />
-                            <hr />
-                            <InputLogger />
-                            <hr />
-                            <SafeCounter />
-                            <hr />
-                            <MunicipalityList />
-                            <hr />
-                            <Counter />
-                            <hr />
-                            <UserSettings />
-                            <hr />
-                            <ToggleMessage handleOnClick={alertMe}>FOO BAR</ToggleMessage>
-                            <hr />
-                            <NameInput />
-                            <hr />
-                            <LoadingIndicator />
-                        </Layout>
-                    </UserContext.Provider>
-                </section>
+        <section title="event-section">
+          <EventCard
+            title="17. mai-feiring"
+            date="2024-05-17"
+            location="Slottsplassen, Oslo"
+          />
+        </section>
 
-                <section title="event-section">
-                    <EventCard
-                        title="17. mai-feiring"
-                        date="2024-05-17"
-                        location="Slottsplassen, Oslo"
-                    />
-                </section>
+        <section title="BrukerInfo Section">
+          <Card title="Brukerinfo">
+            <UserProfile name="Kari Nordmann" city="Bergen" age={30} isActive />
+          </Card>
 
-                <section title="BrukerInfo Section">
-                    <Card title="Brukerinfo">
-                        <UserProfile name="Kari Nordmann" city="Bergen" age={30} isActive />
-                    </Card>
+          <Card title="Brukerinfo">
+            {" "}
+            <UserProfile
+              name="Ola Nordmann"
+              city="Trondheim"
+              age={25}
+              isActive={false}
+            />
+          </Card>
+        </section>
 
-                    <Card title="Brukerinfo">
-                        {" "}
-                        <UserProfile
-                            name="Ola Nordmann"
-                            city="Trondheim"
-                            age={25}
-                            isActive={false}
-                        />
-                    </Card>
-                </section>
-
-                <Card>
-                    {/* This paragraph and button are passed as props.children to Card */}
-                    <p>Dette er annet innhold i et kort uten tittel.</p>
-                    <button>En knapp</button>
-                </Card>
-            </main>
-
-            <Footer />
-        </>
-    );
+        <Card>
+          {/* This paragraph and button are passed as props.children to Card */}
+          <p>Dette er annet innhold i et kort uten tittel.</p>
+          <button>En knapp</button>
+        </Card>
+      </main>
+    </>
+  );
 }
 
 export default HomePage;

@@ -1,0 +1,10 @@
+function NotFound() {
+  return (
+    <div>
+      <h1>404 Page not found</h1>
+      <p>Boo hoo you got lost. Where your grandmama live?</p>
+    </div>
+  );
+}
+
+export default NotFound;
