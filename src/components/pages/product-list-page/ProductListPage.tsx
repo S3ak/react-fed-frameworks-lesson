@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { productsRoute } from "../../../routes/products/productsRoute";
 import Card from "../../card/Card";
 import type { Product } from "../../../types";
