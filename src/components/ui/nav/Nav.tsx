@@ -15,6 +15,16 @@ const links = [
     href: "/products",
     // route: productsRoute,
   },
+  {
+    label: "Counter",
+    href: "/counter",
+    // route: productsRoute,
+  },
+  {
+    label: "Zustand",
+    href: "/zustand",
+    // route: productsRoute,
+  },
 ];
 
 function Nav() {

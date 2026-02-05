@@ -52,7 +52,7 @@ function HomePage() {
             <hr />
             <InputLogger />
             <hr />
-            <SafeCounter />
+            {/* <SafeCounter /> */}
             <hr />
             <MunicipalityList />
             <hr />

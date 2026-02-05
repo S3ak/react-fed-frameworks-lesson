@@ -1,15 +1,12 @@
-import { useState } from "react";
+import useCounter from "../../hooks/counter/counterStore";
 
 function Counter() {
-  // Initialize state variable 'count' with initial value 0
-  const [count, setCount] = useState(0);
+  const count = useCounter((state) => state.count);
 
   // Function to handle the button click
-  const handleIncrement = () => {
-    // Update the state using the setter function
-    // Pass the new value (current count + 1)
-    setCount((prevCount) => prevCount + 1);
-  };
+  const handleIncrement = useCounter((state) => state.increament);
+  const handleDescrement = useCounter((state) => state.decreament);
+  const handleReset = useCounter((state) => state.setCount);
 
   return (
     <div>
@@ -17,7 +14,18 @@ function Counter() {
       {/* Display the current state value */}
       <p>Nåværende verdi: {count}</p>
       {/* Call handleIncrement when the button is clicked */}
-      <button onClick={handleIncrement}>Øk med 1</button>
+      <section>
+        <button onClick={() => handleIncrement()}>+</button>
+        <button onClick={handleDescrement}>-</button>
+        <button onClick={() => handleReset()}>Reset</button>
+        <button
+          onClick={() => {
+            handleIncrement(5);
+          }}
+        >
+          increase by 5
+        </button>
+      </section>
     </div>
   );
 }
