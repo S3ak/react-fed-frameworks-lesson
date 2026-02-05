@@ -2,7 +2,6 @@ import { productRoute } from "../../../routes/products/productRoute";
 
 function ProductDetailsPage() {
   const data = productRoute.useLoaderData();
-  console.log("data", data);
   return (
     <div
       style={{
@@ -17,7 +16,7 @@ function ProductDetailsPage() {
       <div style={{ display: "flex", gap: 24 }}>
         <img
           src={data.thumbnail}
-          alt="a"
+          alt={data.title}
           style={{
             width: 220,
             height: 220,
@@ -29,8 +28,8 @@ function ProductDetailsPage() {
         <div style={{ flex: 1 }}>
           <h1 style={{ marginTop: 0 }}>{data.title}</h1>
           <h4 style={{ margin: 0, color: "#888" }}>
-            {data.title ? "a" : "Ukjent merke"} &nbsp;•&nbsp;{" "}
-            <span style={{ textTransform: "capitalize" }}>{"category"}</span>
+            {data.brand || "Ukjent merke"} &nbsp;•&nbsp;{" "}
+            <span style={{ textTransform: "capitalize" }}>{data.category}</span>
           </h4>
           <p style={{ margin: "1.2rem 0" }}>{data.description}</p>
           <div
