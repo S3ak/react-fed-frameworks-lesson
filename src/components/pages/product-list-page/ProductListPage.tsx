@@ -25,6 +25,7 @@ export default function ProductListPage() {
     if (sortByPrice === "desc") {
       return b.price - a.price;
     }
+    return 0;
   });
 
   // (Pagination logic would use the 'page' parameter here)

@@ -1,6 +1,6 @@
 // In your route definition file (e.g., router.js)
 import { createRoute } from "@tanstack/react-router";
-import type { ProductsResponse } from "../../types";
+import type { Product, ProductsResponse } from "../../types";
 import ProductDetailsPage from "../../components/pages/product-details/ProductDetailsPage";
 import { rootRoute } from "../../router";
 
@@ -22,7 +22,7 @@ const productRoute = createRoute({
 // Export the route definition if needed elsewhere
 export { productRoute };
 
-async function fetchProduct(id: string | number): Promise<ProductsResponse> {
+async function fetchProduct(id: string | number): Promise<Product> {
   try {
     const res = await fetch(`https://dummyjson.com/products/${id}`);
     const data = await res.json();
