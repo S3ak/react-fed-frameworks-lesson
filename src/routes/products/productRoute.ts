@@ -1,6 +1,6 @@
 // In your route definition file (e.g., router.js)
 import { createRoute } from "@tanstack/react-router";
-import type { Product, ProductsResponse } from "../../types";
+import type { Product } from "../../types";
 import ProductDetailsPage from "../../components/pages/product-details/ProductDetailsPage";
 import { rootRoute } from "../../router";
 
