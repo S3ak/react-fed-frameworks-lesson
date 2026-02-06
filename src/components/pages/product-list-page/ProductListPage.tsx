@@ -3,6 +3,8 @@ import { productsRoute } from "../../../routes/products/productsRoute";
 import Card from "../../card/Card";
 import type { Product } from "../../../types";
 import styles from "./productListPage.module.css";
+import { currencyFormatter } from "../../../utils/numbers";
+import useShoppingCart from "../../../hooks/shopping-cart/useShoppingCart";
 
 export default function ProductListPage() {
   // Get the validated search parameters for this route
@@ -10,13 +12,26 @@ export default function ProductListPage() {
   const { query, page, sortByPrice } = productsRoute.useSearch();
   const navigate = useNavigate();
   const { products }: { products: Product[] } = productsRoute.useLoaderData();
+  const addToCart = useShoppingCart((state) => state.addItem);
+  const formattedProducts = products.map((x) => ({
+    ...x,
+    discountedPrice: x.discountPercentage
+      ? Number((x.price * (1 - x.discountPercentage / 100)).toFixed(2))
+      : null,
+  }));
+
+  console.log("formattedProducts", formattedProducts);
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+  };
 
   // Filter products based on the validated query
   const filteredProducts = query
-    ? products.filter((p) =>
+    ? formattedProducts.filter((p) =>
         p.title.toLowerCase().includes(query.toLowerCase()),
       )
-    : products;
+    : formattedProducts;
 
   const sortedProducts = filteredProducts.sort((a, b) => {
     if (sortByPrice === "asc") {
@@ -69,22 +84,74 @@ export default function ProductListPage() {
       </section>
 
       {/* Display filtered products */}
-      <ul>
-        {sortedProducts.map((product) => (
-          <div key={product.id} className={styles.productList}>
-            <Link
-              to="/products/$productId"
-              params={{
-                productId: product.id,
-              }}
-            >
-              <Card title={product.title}>{product.price}</Card>
-            </Link>
-          </div>
-        ))}
-      </ul>
+      <section className={styles.productGrid}>
+        {sortedProducts.map((product) => {
+          return (
+            <div key={product.id}>
+              <Card className={styles.card}>
+                <Link
+                  to="/products/$productId"
+                  params={{
+                    productId: product.id,
+                  }}
+                >
+                  <img src={product.thumbnail} alt="" />
+                  <h2>{product.title}</h2>
+
+                  <strong className={styles.priceDisplayRow}>
+                    <span
+                      className={
+                        product.discountedPrice
+                          ? styles.cancelledPrice
+                          : styles.originalPrice
+                      }
+                    >
+                      {currencyFormatter(product.price)}
+                    </span>
+
+                    <span>
+                      {product.discountedPrice
+                        ? currencyFormatter(product.discountedPrice)
+                        : null}
+                    </span>
+                  </strong>
+
+                  <div>
+                    <div>{makeStars(product.rating)}</div>{" "}
+                    {product.rating.toFixed(1)}/5
+                  </div>
+
+                  <div>{product.stock > 0 ? <div>🟢 In Stock</div> : null}</div>
+                </Link>
+
+                <section className={styles.controlSection}>
+                  <button
+                    className={styles.addToCartButton}
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Add to cart
+                  </button>
+                </section>
+              </Card>
+            </div>
+          );
+        })}
+      </section>
 
       {/* Input/Links to change search params would go here (see next section) */}
     </div>
+  );
+}
+
+function makeStars(rating: number) {
+  const roundedVal = Math.floor(rating);
+  const arr = new Array(roundedVal).fill("⭐");
+
+  return (
+    <>
+      {arr.map((star, idx) => (
+        <span key={idx}>{star}</span>
+      ))}
+    </>
   );
 }

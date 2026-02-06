@@ -1,4 +1,3 @@
-
 import type {
   ComponentType,
   ErrorInfo,
@@ -85,7 +84,6 @@ export interface Hair {
   type: string;
 }
 
-
 export type FallbackProps = {
   error: unknown;
   resetErrorBoundary: (...args: unknown[]) => void;
@@ -109,10 +107,10 @@ type ErrorBoundarySharedProps = PropsWithChildren<{
     details:
       | { reason: "imperative-api"; args: unknown[] }
       | {
-        reason: "keys";
-        prev: unknown[] | undefined;
-        next: unknown[] | undefined;
-      },
+          reason: "keys";
+          prev: unknown[] | undefined;
+          next: unknown[] | undefined;
+        },
   ) => void;
 
   /**
@@ -167,8 +165,6 @@ export type ErrorBoundaryProps =
   | ErrorBoundaryPropsWithComponent
   | ErrorBoundaryPropsWithRender;
 
-
-
 export interface ProductsResponse {
   limit: number;
   products: Product[];
@@ -199,6 +195,10 @@ export interface Product {
   title: string;
   warrantyInformation: string;
   weight: number;
+}
+
+interface ProductWithQuantity extends Product {
+  quantity: number;
 }
 
 export enum AvailabilityStatus {
