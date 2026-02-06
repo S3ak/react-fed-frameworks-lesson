@@ -34,12 +34,11 @@ const useShoppingCart = create<State & Actions>()(
           }),
         addItem: (product) =>
           set(() => {
-            const existingItem = get().items.find(
-              (item) => item.id === product.id,
-            );
+            const items = get().items;
+            const existingItem = items.find((item) => item.id === product.id);
 
             if (existingItem) {
-              const updatedItems = get().items.map((item) =>
+              const updatedItems = items.map((item) =>
                 item.id === product.id
                   ? { ...item, quantity: item.quantity + 1 }
                   : item,
@@ -47,23 +46,17 @@ const useShoppingCart = create<State & Actions>()(
 
               return {
                 items: updatedItems,
-                itemCount: updatedItems.reduce(
-                  (count, item) => count + item.quantity,
-                  0,
-                ),
+                itemCount: calculateCount(updatedItems),
                 sumAmount: calculateTotal(updatedItems),
                 totalAmount: calculateTotal(updatedItems),
               };
             }
 
-            const updatedItems = [...get().items, { ...product, quantity: 1 }];
+            const updatedItems = [...items, { ...product, quantity: 1 }];
 
             return {
               items: updatedItems,
-              itemCount: updatedItems.reduce(
-                (count, item) => count + item.quantity,
-                0,
-              ),
+              itemCount: calculateCount(updatedItems),
               sumAmount: calculateTotal(updatedItems),
               totalAmount: calculateTotal(updatedItems),
             };
@@ -76,33 +69,30 @@ const useShoppingCart = create<State & Actions>()(
 
             return {
               items: updatedItems,
-              itemCount: updatedItems.reduce(
-                (count, item) => count + item.quantity,
-                0,
-              ),
+              itemCount: calculateCount(updatedItems),
               sumAmount: calculateTotal(updatedItems),
               totalAmount: calculateTotal(updatedItems),
             };
           }),
         updateQuantity: (product, shiftVal) =>
           set(() => {
-            const existingItem = get().items.find(
-              (item) => item.id === product.id,
-            );
+            const items = get().items;
+            const existingItem = items.find((item) => item.id === product.id);
 
             if (existingItem) {
-              const updatedItems = get().items.map((item) =>
+              const updatedItems = items.map((item) =>
                 item.id === product.id
                   ? { ...item, quantity: item.quantity + shiftVal }
                   : item,
               );
 
+              const filteredItems = updatedItems.filter(
+                (item) => item.quantity > 0,
+              );
+
               return {
-                items: updatedItems,
-                itemCount: updatedItems.reduce(
-                  (count, item) => count + item.quantity,
-                  0,
-                ),
+                items: filteredItems,
+                itemCount: calculateCount(updatedItems),
                 sumAmount: calculateTotal(updatedItems),
                 totalAmount: calculateTotal(updatedItems),
               };
@@ -135,4 +125,8 @@ function calculateTotal(items: ProductWithQuantity[] = []) {
   );
 
   return Number(total.toFixed(2));
+}
+
+function calculateCount(items: ProductWithQuantity[] = []) {
+  return items.reduce((count, item) => count + item.quantity, 0);
 }
