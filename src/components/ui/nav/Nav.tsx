@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import Button from "../../button/Button";
+import styles from "./nav.module.css";
 // import { productsRoute } from "../../../routes/products/productsRoute";
 // import { homeRoute } from "../../../routes/home/homeRoute";
 
@@ -25,11 +26,16 @@ const links = [
     href: "/zustand",
     // route: productsRoute,
   },
+  {
+    label: "Pagination",
+    href: "/pagination",
+    // route: productsRoute,
+  },
 ];
 
 function Nav() {
   return (
-    <nav>
+    <nav className={styles.list}>
       {links.map(({ label, href }) => (
         <Link to={href} key={label}>
           <Button>{label}</Button>

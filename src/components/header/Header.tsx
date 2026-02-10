@@ -2,12 +2,16 @@
 // import UserContext from "../../hooks/user/UserContext";
 
 import useName from "../../hooks/name/nameStore";
+import useShoppingCart from "../../hooks/shopping-cart/useShoppingCart";
 import Nav from "../ui/nav/Nav";
 import styles from "./Header.module.css";
 
 function Header() {
   // #TODO: Fix user context
   // const user = useContext(UserContext);
+  const handleOnCartToggle = useShoppingCart(
+    (state) => state.toggleCartVisibilty,
+  );
 
   const firstName = useName((state) => state.firstName);
 
@@ -19,7 +23,7 @@ function Header() {
         </div>
 
         <div className={styles.actions}>
-          <button className={styles.boomButton} onClick={() => {}}>
+          <button className={styles.boomButton} onClick={handleOnCartToggle}>
             Cart 🛒
           </button>
         </div>

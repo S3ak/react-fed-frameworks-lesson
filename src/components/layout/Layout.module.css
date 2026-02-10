@@ -1,5 +1,6 @@
 .layoutContainer {
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto auto;
   grid-template-areas:
@@ -9,6 +10,10 @@
     "footer";
   gap: 0;
   min-height: 100dvh;
+
+  &.isAsideVisible {
+    grid-template-columns: 1fr 0px;
+  }
 }
 
 header {
@@ -18,6 +23,8 @@ header {
 main {
   grid-area: main;
   overflow-y: auto;
+  margin: auto;
+  max-width: 650px;
 }
 
 aside {

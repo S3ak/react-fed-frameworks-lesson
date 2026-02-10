@@ -1,4 +1,5 @@
 import useShoppingCart from "../../../../hooks/shopping-cart/useShoppingCart";
+import type { ProductWithQuantity } from "../../../../types";
 import styles from "./ShoppingCart.module.css";
 
 export default function ShoppingCart() {
@@ -7,13 +8,15 @@ export default function ShoppingCart() {
   const itemCount = useShoppingCart((state) => state.itemCount);
   const items = useShoppingCart((state) => state.items);
   const updateQuantity = useShoppingCart((state) => state.updateQuantity);
-  const handleOnCartClose = () => {};
+  const handleOnCartClose = useShoppingCart(
+    (state) => state.toggleCartVisibilty,
+  );
   const handleGotoCheckout = () => {};
   const handleRemoveCartItem = useShoppingCart((state) => state.removeItem);
-  const handleDecreaseQuantity = (product) => {
+  const handleDecreaseQuantity = (product: ProductWithQuantity) => {
     updateQuantity(product, -1);
   };
-  const handleIncreaseQuantity = (product) => {
+  const handleIncreaseQuantity = (product: ProductWithQuantity) => {
     updateQuantity(product, +1);
   };
   const handleRestCart = useShoppingCart((state) => state.resetCart);

@@ -6,6 +6,7 @@ import Layout from "./components/layout/Layout";
 import NotFound from "./components/pages/not-found/NotFound";
 import { counterRoute } from "./routes/counter/counterRoute";
 import { zustandRoute } from "./routes/zustand/zustandRoute";
+import { paginationRoute } from "./routes/pagination/paginationRoute";
 
 export const rootRoute = createRootRoute({
   component: Layout,
@@ -19,6 +20,7 @@ const routeTree = rootRoute.addChildren([
   productsRoute,
   counterRoute,
   zustandRoute,
+  paginationRoute,
 ]);
 
 export const router = createRouter({ routeTree });

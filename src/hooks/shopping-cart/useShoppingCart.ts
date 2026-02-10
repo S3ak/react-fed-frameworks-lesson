@@ -23,14 +23,16 @@ const useShoppingCart = create<State & Actions>()(
   immer(
     persist(
       (set, get) => ({
-        isOpen: false,
+        isOpen: true,
         items: [],
         sumAmount: 0,
         totalAmount: 0,
         itemCount: 0,
         toggleCartVisibilty: () =>
           set(() => {
-            return {};
+            return {
+              isOpen: !get().isOpen,
+            };
           }),
         addItem: (product) =>
           set(() => {
