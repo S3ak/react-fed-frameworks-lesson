@@ -7,6 +7,7 @@ import NotFound from "./components/pages/not-found/NotFound";
 import { counterRoute } from "./routes/counter/counterRoute";
 import { zustandRoute } from "./routes/zustand/zustandRoute";
 import { paginationRoute } from "./routes/pagination/paginationRoute";
+import { formsRoute } from "./routes/pagination/formsRoute";
 
 export const rootRoute = createRootRoute({
   component: Layout,
@@ -21,6 +22,7 @@ const routeTree = rootRoute.addChildren([
   counterRoute,
   zustandRoute,
   paginationRoute,
+  formsRoute
 ]);
 
 export const router = createRouter({ routeTree });

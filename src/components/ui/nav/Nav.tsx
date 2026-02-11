@@ -31,6 +31,11 @@ const links = [
     href: "/pagination",
     // route: productsRoute,
   },
+  {
+    label: "Forms",
+    href: "/forms",
+    // route: productsRoute,
+  },
 ];
 
 function Nav() {
