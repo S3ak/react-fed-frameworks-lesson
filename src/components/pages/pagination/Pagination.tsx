@@ -1,11 +1,19 @@
+import PaginatedGameListClientSide from "../../ui/games-pagination/GamesPaginationClientSide";
+import GamesWithInfiniteScroll from "../../ui/games-pagination/GamesPaginationServerSideWithInifinteScroll";
+import GamesPaginationServerSide from "../../ui/games-pagination/GamesPaginationServerSideWithStore";
+import SimpleInifiniteScroll from "../../ui/simple-infinite-scroll/SimpleInifiniteScroll";
 import SimpleCountyList from "../../ui/simple-pagination-example/SimplePaginationExample";
 
-function Pagination() {
+function PaginationPage() {
   return (
     <div>
-      <SimpleCountyList />
+      <GamesWithInfiniteScroll />
+      {/* <SimpleInifiniteScroll />
+      <GamesPaginationServerSide />
+      <PaginatedGameListClientSide />
+      <SimpleCountyList /> */}
     </div>
   );
 }
 
-export default Pagination;
+export default PaginationPage;
