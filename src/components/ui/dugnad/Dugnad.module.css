@@ -35,7 +35,18 @@
   border-radius: 0.5rem;
   border: 1px solid #d1d5db;
   font-size: 0.95rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  border-width: 4px;
+
+  &.isValid {
+    border-color: #16a34a;
+  }
+}
+
+.input.isValid {
+  border-color: #16a34a;
 }
 
 .input:focus,
@@ -68,7 +79,10 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.12s ease;
 }
 
 .submitButton:hover {
@@ -88,3 +102,32 @@
   outline-offset: 2px;
 }
 
+.error {
+  font-size: 0.85rem;
+  color: #dc2626;
+  margin-top: 0.25rem;
+  padding: 0.35rem 0.5rem;
+  background-color: #fee2e2;
+  border-left: 3px solid #dc2626;
+  border-radius: 0.3rem;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #374151;
+  cursor: pointer;
+}
+
+.radioLabel input[type="radio"] {
+  cursor: pointer;
+}

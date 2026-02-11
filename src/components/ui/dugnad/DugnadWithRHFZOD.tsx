@@ -1,5 +1,36 @@
-import styles from "./Dugnad.module.css";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import styles from "./Dugnad.module.css";
+
+const NORWEGIAN_EMAIL_REGEX =
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const NAME_REGEX = /^[a-zA-ZæøåÆØÅ .'-]+$/;
+
+const DugnadFormSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, { message: "Too short, ask your mom for a better name" })
+    .max(100, { message: "Navn kan ikke være lenger enn 100 tegn." })
+    .regex(NAME_REGEX, { message: "Navn inneholder ugyldige tegn." }),
+  email: z
+    .email({ message: "Ugyldig e-postformat." })
+    .trim()
+    .min(1, { message: "E-post er påkrevd." })
+    .refine((value) => NORWEGIAN_EMAIL_REGEX.test(value), {
+      message:
+        "E-postadressen ser ikke ut til å være gyldig for dette domenet.",
+    }),
+  preferredTask: z.enum([
+    "Hagearbeid",
+    "Maling",
+    "Rydding",
+    "Servering av vafler",
+  ]),
+  bringsTools: z.boolean(),
+  paymentMethod: z.enum(["Vipps", "Kort", "Faktura"]),
+});
 
 const initialState = {
   name: "",
@@ -9,17 +40,9 @@ const initialState = {
   paymentMethod: "Vipps" as const,
 };
 
-type Inputs = {
-  name: string;
-  email: string;
-  bringsTools: boolean;
-  preferredTask: "Hagearbeid" | "Maling" | "Rydding" | "Servering av vafler";
-  paymentMethod: "Vipps" | "Kort" | "Faktura";
-};
+type Inputs = z.infer<typeof DugnadFormSchema>;
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function RHFDugnadForm() {
+function RHFDugnadFormWithZOD() {
   const {
     register,
     handleSubmit,
@@ -27,6 +50,7 @@ function RHFDugnadForm() {
     reset,
   } = useForm<Inputs>({
     mode: "onBlur",
+    resolver: zodResolver(DugnadFormSchema),
     defaultValues: initialState,
   });
 
@@ -70,13 +94,7 @@ function RHFDugnadForm() {
           id="name"
           className={`${styles.input} ${!errors.name && dirtyFields.name ? styles.isValid : ""}`}
           autoComplete="name"
-          {...register("name", {
-            required: "Navn er påkrevd.",
-            minLength: {
-              value: 2,
-              message: "Must be more than 1 character",
-            },
-          })}
+          {...register("name")}
           aria-invalid={errors.name ? "true" : "false"}
           aria-describedby="nameError"
         />
@@ -94,19 +112,11 @@ function RHFDugnadForm() {
           id="email"
           type="email"
           className={`${styles.input} ${!errors.email && dirtyFields.email ? styles.isValid : ""}`}
-          {...register("email", {
-            required: "E-post er påkrevd.",
-            pattern: {
-              value: EMAIL_REGEX,
-              message:
-                "Ugyldig e-postformat. Forventet format er 'navn@domene.no'.",
-            },
-          })}
+          {...register("email")}
           aria-invalid={errors.email ? "true" : "false"}
-          aria-describedby="emailError"
         />
         {errors.email && (
-          <p role="alert" id="emailError" className={styles.error}>
+          <p role="alert" className={styles.error}>
             {errors.email.message}
           </p>
         )}
@@ -118,11 +128,8 @@ function RHFDugnadForm() {
         <select
           id="preferredTask"
           className={`${styles.select} ${!errors.preferredTask && dirtyFields.preferredTask ? styles.isValid : ""}`}
-          {...register("preferredTask", {
-            required: "Vennligst velg en oppgave.",
-          })}
+          {...register("preferredTask")}
           aria-invalid={errors.preferredTask ? "true" : "false"}
-          aria-describedby="preferredTaskError"
         >
           <option value="Hagearbeid">Hagearbeid (Gardening)</option>
           <option value="Maling">Maling (Painting)</option>
@@ -132,25 +139,14 @@ function RHFDugnadForm() {
           </option>
         </select>
         {errors.preferredTask && (
-          <p role="alert" id="preferredTaskError" className={styles.error}>
+          <p role="alert" className={styles.error}>
             {errors.preferredTask.message}
           </p>
         )}
       </div>
       <div className={styles.checkboxRow}>
-        <input
-          type="checkbox"
-          id="bringsTools"
-          {...register("bringsTools")}
-          aria-invalid={errors.bringsTools ? "true" : "false"}
-          aria-describedby="bringsToolsError"
-        />
+        <input type="checkbox" id="bringsTools" {...register("bringsTools")} />
         <label htmlFor="bringsTools">Jeg kan ta med eget verktøy</label>
-        {errors.bringsTools && (
-          <p role="alert" id="bringsToolsError" className={styles.error}>
-            {errors.bringsTools.message}
-          </p>
-        )}
       </div>
       <div className={styles.field}>
         <label className={styles.label}>Velg betalingsmåte:</label>
@@ -158,25 +154,13 @@ function RHFDugnadForm() {
           <label
             className={`${styles.radioLabel} ${!errors.paymentMethod && dirtyFields.paymentMethod ? styles.isValid : ""}`}
           >
-            <input
-              type="radio"
-              value="Vipps"
-              {...register("paymentMethod")}
-              aria-invalid={errors.paymentMethod ? "true" : "false"}
-              aria-describedby="paymentMethodError"
-            />
+            <input type="radio" value="Vipps" {...register("paymentMethod")} />
             Vipps
           </label>
           <label
             className={`${styles.radioLabel} ${!errors.paymentMethod && dirtyFields.paymentMethod ? styles.isValid : ""}`}
           >
-            <input
-              type="radio"
-              value="Kort"
-              {...register("paymentMethod")}
-              aria-invalid={errors.paymentMethod ? "true" : "false"}
-              aria-describedby="paymentMethodError"
-            />
+            <input type="radio" value="Kort" {...register("paymentMethod")} />
             Bankkort
           </label>
           <label
@@ -186,17 +170,10 @@ function RHFDugnadForm() {
               type="radio"
               value="Faktura"
               {...register("paymentMethod")}
-              aria-invalid={errors.paymentMethod ? "true" : "false"}
-              aria-describedby="paymentMethodError"
             />
             Faktura
           </label>
         </div>
-        {errors.paymentMethod && (
-          <p role="alert" id="paymentMethodError" className={styles.error}>
-            {errors.paymentMethod.message}
-          </p>
-        )}
       </div>
       ;
       <button
@@ -210,4 +187,4 @@ function RHFDugnadForm() {
   );
 }
 
-export default RHFDugnadForm;
+export default RHFDugnadFormWithZOD;
