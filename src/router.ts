@@ -8,6 +8,7 @@ import { counterRoute } from "./routes/counter/counterRoute";
 import { zustandRoute } from "./routes/zustand/zustandRoute";
 import { paginationRoute } from "./routes/pagination/paginationRoute";
 import { formsRoute } from "./routes/pagination/formsRoute";
+import { fetchingDataRoute } from "./routes/fetching-data/fetchingDataRoute";
 
 export const rootRoute = createRootRoute({
   component: Layout,
@@ -22,7 +23,8 @@ const routeTree = rootRoute.addChildren([
   counterRoute,
   zustandRoute,
   paginationRoute,
-  formsRoute
+  formsRoute,
+  fetchingDataRoute,
 ]);
 
 export const router = createRouter({ routeTree });

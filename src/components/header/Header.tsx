@@ -20,6 +20,7 @@ function Header() {
       <div className={styles.topRow}>
         <div className={styles.brand}>
           <h1 className={styles.title}>Learn React</h1>
+          <p className={styles.welcome}>Welcome {firstName}</p>
         </div>
 
         <div className={styles.actions}>
@@ -32,8 +33,6 @@ function Header() {
       <div className={styles.navRow}>
         <Nav />
       </div>
-
-      <p className={styles.welcome}>Welcome {firstName}</p>
     </header>
   );
 }

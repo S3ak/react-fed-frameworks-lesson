@@ -14,22 +14,40 @@ function PaginatedGameList() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     const fetchGames = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const response = await fetch(
           `${API_BASE_URL}?page=${currentPage}&limit=${ITEMS_PER_PAGE}`,
+          {
+            signal,
+          },
         );
+
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          let errorMessage = `API-forespørsel feilet: ${response.status} ${response.statusText}`;
+
+          try {
+            const errorData = await response.json();
+            if (errorData?.errors[0]?.message) {
+              errorMessage = errorData?.errors[0]?.message;
+            }
+          } catch (jsonError) {
+            console.warn("Could not parse error response as JSON:", jsonError);
+          }
+          throw new Error(`HTTP error! status: ${errorMessage}`);
         }
+
         const result = await response.json();
 
-        setGames(result.data); // The API returns items in 'data'
+        setGames(result.data || []); // The API returns items in 'data'
         // The API returns pagination info in 'meta'
         if (result.meta) {
           setCurrentPage(result.meta.currentPage);
@@ -41,7 +59,15 @@ function PaginatedGameList() {
           setTotalItems(result.data.length);
         }
       } catch (err) {
-        setError(err?.message);
+        // Ignore AbortError - this is expected when cleanup aborts the request
+        if (err instanceof Error && err.name === "AbortError") {
+          console.log("Request was cancelled");
+          return;
+        }
+
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred",
+        );
         console.error("Failed to fetch games:", err);
       } finally {
         setIsLoading(false);
@@ -49,6 +75,10 @@ function PaginatedGameList() {
     };
 
     fetchGames();
+
+    return () => {
+      controller.abort();
+    };
   }, [currentPage]); // Re-fetch when currentPage changes
 
   const handlePageChange = (pageNumber: number) => {
@@ -67,6 +97,10 @@ function PaginatedGameList() {
 
   if (error) {
     return <div>Someting went wrong</div>;
+  }
+
+  if (games.length === 0) {
+    return <p>Ingen spill funnet i databasen.</p>; // No games found
   }
 
   return (

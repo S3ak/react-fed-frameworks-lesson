@@ -36,6 +36,11 @@ const links = [
     href: "/forms",
     // route: productsRoute,
   },
+  {
+    label: "Data",
+    href: "/fetching-data",
+    // route: productsRoute,
+  },
 ];
 
 function Nav() {
