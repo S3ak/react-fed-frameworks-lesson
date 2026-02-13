@@ -1,14 +1,12 @@
 import Card from "../../../components/card/Card";
-import Footer from "../../../components/footer/Footer";
 import UserProfile from "../../../components/user-profile/UserProfile";
 import EventCard from "../../../components/event-card/EventCard";
 import Counter from "../../../components/counter/Counter";
 import UserSettings from "../../../components/user-settings/UserSettings";
-import ToggleMessage from "../../../components/toggle-message/ToggleMessage";
+import ToggleMessage from "../../ui/toggle-message/ToggleMessage";
 import NameInput from "../../../components/name-input/NameInput";
 import LoadingIndicator from "../../../components/loading-indicator/LoadingIndicator";
 import MunicipalityList from "../../../components/municipalities/Municipalities";
-import SafeCounter from "../../../components/safe-counter/SafeCounter";
 import InputLogger from "../../../components/input-logger/InputLogger";
 import UserGreeting from "../../../components/user-greeting/UserGreeting";
 import Timer from "../../../components/timer/Timer";
@@ -16,9 +14,6 @@ import MouseTracker from "../../../components/mouse-tracker/MouseTracker";
 import { useEffect, useState } from "react";
 import UserContext from "../../../hooks/user/UserContext";
 import type { OptionalUser, User } from "../../../types";
-import Layout from "../../../components/layout/Layout";
-import { Link } from "@tanstack/react-router";
-import Nav from "../../ui/nav/Nav";
 
 function HomePage() {
   const [user, setUser] = useState<OptionalUser>({});

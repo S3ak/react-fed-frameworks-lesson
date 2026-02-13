@@ -4,7 +4,7 @@ import React from "react";
 interface IProps {
   title?: string;
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }
 
 export default function Card({ children, title, className }: IProps) {
