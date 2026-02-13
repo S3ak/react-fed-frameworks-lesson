@@ -41,6 +41,11 @@ const links = [
     href: "/fetching-data",
     // route: productsRoute,
   },
+  {
+    label: "Query",
+    href: "/tanstack-query",
+    // route: productsRoute,
+  },
 ];
 
 function Nav() {

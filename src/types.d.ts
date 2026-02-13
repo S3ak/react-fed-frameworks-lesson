@@ -241,3 +241,19 @@ export interface Review {
   reviewerEmail: string;
   reviewerName: string;
 }
+
+export interface TodoResponse {
+  limit: number;
+  skip: number;
+  todos: Todo[];
+  total: number;
+}
+
+export interface Todo {
+  completed: boolean;
+  id: number;
+  todo: string;
+  userId: number;
+}
+
+export type CreateTodoInput = Omit<Todo, "id">;

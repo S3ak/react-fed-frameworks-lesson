@@ -9,6 +9,7 @@ import { zustandRoute } from "./routes/zustand/zustandRoute";
 import { paginationRoute } from "./routes/pagination/paginationRoute";
 import { formsRoute } from "./routes/pagination/formsRoute";
 import { fetchingDataRoute } from "./routes/fetching-data/fetchingDataRoute";
+import { tanstackQueryRoute } from "./routes/tanstack-query/tanstackQueryRoute";
 
 export const rootRoute = createRootRoute({
   component: Layout,
@@ -25,6 +26,7 @@ const routeTree = rootRoute.addChildren([
   paginationRoute,
   formsRoute,
   fetchingDataRoute,
+  tanstackQueryRoute,
 ]);
 
 export const router = createRouter({ routeTree });
