@@ -4,11 +4,9 @@ import styles from "./ToggleMessage.module.css";
 export default function ToggleMessage({
   children,
   message,
-  handleOnClick,
 }: {
   children?: React.ReactNode;
   message?: string;
-  handleOnClick: () => void;
 }) {
   const [isVisible, setIsVibible] = useState(true);
 
@@ -19,15 +17,9 @@ export default function ToggleMessage({
   return (
     <div className={isVisible ? styles.isVisible : styles.isHidden}>
       <>
-        <p>{message}</p>
+        <p role="heading">{message}</p>
         {children}
-        <button
-          onClick={(event) => {
-            console.log("event", event);
-          }}
-        >
-          Vis/Skjul Melding
-        </button>
+        <button onClick={handleIsVisible}>Vis/Skjul Melding</button>
       </>
     </div>
   );

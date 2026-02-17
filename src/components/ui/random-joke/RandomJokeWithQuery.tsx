@@ -17,6 +17,7 @@ function RandomJokeWithQuery() {
           Accept: "application/json",
         },
       });
+      console.log("bro", response);
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -46,7 +47,7 @@ function RandomJokeWithQuery() {
 
   return (
     <div>
-      <h2>Dagens Vits</h2>
+      <h2 role="heading">Dagens Vits</h2>
       {joke ? <p>{joke.joke}</p> : <p>Ingen vits funnet.</p>}
       {/* <button onClick={fetchJoke} disabled={isLoading}>
         Få en ny vits
